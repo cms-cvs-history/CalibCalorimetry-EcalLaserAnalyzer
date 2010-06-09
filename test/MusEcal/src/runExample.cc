@@ -54,6 +54,9 @@ int main(int argc, char **argv)
 	}
     }
 
+  MusEcal::firstRun=first;
+  MusEcal::lastRun=last;
+
   string period(getenv("MEPERIOD"));
   
   int type  = ME::iLaser; 
