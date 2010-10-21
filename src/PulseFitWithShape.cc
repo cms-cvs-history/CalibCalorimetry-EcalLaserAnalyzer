@@ -1,7 +1,7 @@
 /* 
  *  \class PulseFitWithShape
  *
- *  $Date: 2008/01/31 11:25:50 $
+ *  $Date: 2010/02/19 15:16:36 $
  *  \author: Julie Malcles - CEA/Saclay
  */
 
@@ -34,7 +34,7 @@ PulseFitWithShape::~PulseFitWithShape()
 
 // Initialisation
 
-void PulseFitWithShape::init(int n_samples,int samplb,int sampla,int niter,int n_samplesShape, vector<double> shape, double nois)
+void PulseFitWithShape::init(int n_samples,int samplb,int sampla,int niter,int n_samplesShape, std::vector<double> shape, double nois)
 {
  
   fNsamples   = n_samples ;
@@ -45,7 +45,7 @@ void PulseFitWithShape::init(int n_samples,int samplb,int sampla,int niter,int n
 
 
   if( fNsamplesShape < fNum_samp_bef_max+fNum_samp_after_max+1){
-    cout<<"PulseFitWithShape::init: Error! Configuration samples in fit greater than total number of samples!" << endl;
+    std::cout<<"PulseFitWithShape::init: Error! Configuration samples in fit greater than total number of samples!" << std::endl;
   }
 
   for(int i=0;i<fNsamplesShape;i++){
@@ -86,6 +86,7 @@ double PulseFitWithShape::doFit(double *adc, double *cova)
   //if(cova[0] > 0.) noise=1./sqrt(cova[0]);
   
   xpar[0]=0.;
+  xpar[2]=0.;
 
 
   // first locate max:
