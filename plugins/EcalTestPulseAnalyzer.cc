@@ -3,7 +3,7 @@
  *
  *  \class EcalTestPulseAnalyzer
  *
- *  $Date: 2009/06/02 12:55:19 $
+ *  $Date: 2010/01/18 17:28:45 $
  *  primary author: Julie Malcles - CEA/Saclay
  *  author: Gautier Hamel De Monchenault - CEA/Saclay
  */
@@ -140,7 +140,7 @@ void EcalTestPulseAnalyzer::beginJob() {
   
   for (unsigned int i=0;i<nCrys;i++){
     
-    stringstream name;
+    std::stringstream name;
     name << "Tree" <<i;
     
     trees[i]= new TTree(name.str().c_str(),name.str().c_str());
@@ -194,7 +194,7 @@ void EcalTestPulseAnalyzer::beginJob() {
 
   // Define output results file name
   
-  stringstream namefile;
+  std::stringstream namefile;
   namefile << resdir_ <<"/APDPN_TESTPULSE.root";      
   resfile=namefile.str();
 
@@ -321,8 +321,8 @@ void EcalTestPulseAnalyzer:: analyze( const edm::Event & e, const  edm::EventSet
   int pnG[50];
   int pngain=0;
   
-  map <int, vector<double> > allPNAmpl;
-  map <int, vector<int> > allPNGain;
+  std::map <int, std::vector<double> > allPNAmpl;
+  std::map <int, std::vector<int> > allPNGain;
   
   for ( EcalPnDiodeDigiCollection::const_iterator pnItr = PNDigi->begin(); pnItr != PNDigi->end(); ++pnItr ) { // Loop on PNs 
     
@@ -342,7 +342,7 @@ void EcalTestPulseAnalyzer:: analyze( const edm::Event & e, const  edm::EventSet
       pn[samId]=(*pnItr).sample(samId).adc(); 
       pnG[samId]=(*pnItr).sample(samId).gainId();
       
-      if(pnG[samId]!=1) cout << "PN gain different from 1 for sample "<<samId<< endl;
+      if(pnG[samId]!=1) std::cout << "PN gain different from 1 for sample "<<samId<< std::endl;
       if (samId==0) pngain=pnG[samId];
       if (samId>0) pngain=TMath::Max(pnG[samId],pngain); 
     }
@@ -645,21 +645,21 @@ void EcalTestPulseAnalyzer::endJob() {
     
     // Remove temporary file
     
-    stringstream del;
+    std::stringstream del;
     del << "rm " <<rootfile;
     system(del.str().c_str()); 
     
-    cout << " No TP Events "<< endl;
+    std::cout << " No TP Events "<< std::endl;
     return;
   }
 
-  cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
-  cout <<    "\t+=+     Analyzing test pulse data: getting APD, PN  +=+" << endl;
+  std::cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
+  std::cout <<    "\t+=+     Analyzing test pulse data: getting APD, PN  +=+" << std::endl;
   
   
   // Create output ntuples:
   
-  //cout<< "TP Test Name File "<< resfile.c_str() << endl;
+  //std::cout<< "TP Test Name File "<< resfile.c_str() << std::endl;
 
   resFile = new TFile(resfile.c_str(),"RECREATE");
   
@@ -805,7 +805,7 @@ void EcalTestPulseAnalyzer::endJob() {
 
   // Remove temporary file
 
-  stringstream del;
+  std::stringstream del;
   del << "rm " <<rootfile;
   system(del.str().c_str()); 
 
@@ -816,8 +816,8 @@ void EcalTestPulseAnalyzer::endJob() {
   respntrees->Write();
   resFile->Close(); 
   
-  cout <<    "\t+=+    ...................................... done  +=+" << endl;
-  cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
+  std::cout <<    "\t+=+    ...................................... done  +=+" << std::endl;
+  std::cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
 }
 
 
