@@ -54,7 +54,7 @@ TString ME::color[ME::iSizeC] = {
   "Blue", "Green", "Red", "IRed", "LED1", "LED2" 
 };
 
-vector<MEChannel*> ME::_trees = vector<MEChannel*>(4,(MEChannel*)0); 
+std::vector<MEChannel*> ME::_trees = std::vector<MEChannel*>(4,(MEChannel*)0); 
 
 bool ME::useElectronicNumbering = false;
 
@@ -460,7 +460,7 @@ ME::regTree( int ireg )
 	  if( iEcalRegion_==iEBM ) iSector_+=18; 
 	  if( _trees[iEcalRegion_]==0 )
 	    {
-	      //	      cout << "Building the tree of crystals -- " 
+	      //	      std::cout << "Building the tree of crystals -- " 
 	      //		   << ME::region[iEcalRegion_];  
 	      _trees[iEcalRegion_] = new MEChannel( 0, 0, iEcalRegion_, 0 ); 
 	    }
@@ -508,7 +508,7 @@ ME::regTree( int ireg )
       if( iEcalRegion_==iEEM ) iz=-1;
       if( _trees[iEcalRegion_]==0 )
 	{
-	  //	  cout << "Building the tree of crystals -- " 
+	  //	  std::cout << "Building the tree of crystals -- " 
 	  //	       << ME::region[iEcalRegion_];  
 	  _trees[iEcalRegion_] = new MEChannel( 0, 0, iEcalRegion_, 0 ); 
 	}
@@ -561,7 +561,7 @@ ME::regTree( int ireg )
 	    }
 	}
     }
-  //  cout << ".... done" << endl;  
+  //  std::cout << ".... done" << std::endl;  
   return _trees[iEcalRegion_];
 }
 
@@ -575,14 +575,14 @@ ME::isBarrel( int ilmr )
   return true;
 }
 
-pair<int,int>
+std::pair<int,int>
 ME::memFromLmr( int ilmr )
 {
   if( isBarrel( ilmr ) )
     return MEEBGeom::memFromLmr( ilmr );
   else
     return MEEEGeom::memFromLmr( ilmr );
-  return pair<int,int>();
+  return std::pair<int,int>();
 }
 std::vector< int>
 ME::apdRefChannels( int ilmmod , int ilmr)
@@ -594,41 +594,41 @@ ME::apdRefChannels( int ilmmod , int ilmr)
   return std::vector< int>();
 }
 
-vector<int>
+std::vector<int>
 ME::lmmodFromLmr( int ilmr )
 {
   if( isBarrel(ilmr) )
     return MEEBGeom::lmmodFromLmr( ilmr );
   else
     return MEEEGeom::lmmodFromLmr( ilmr );
-  return vector<int>();
+  return std::vector<int>();
 }
 
-vector<int>
+std::vector<int>
 ME::memFromDcc( int idcc )
 {
-  vector<int> vec;
+  std::vector<int> vec;
   for( int iside=0; iside<=1;  iside++ )
     {
       int ilmr = lmr( idcc, iside );
       if( ilmr<0 ) continue;
-      pair< int, int > mem_ = memFromLmr( ilmr );
+      std::pair< int, int > mem_ = memFromLmr( ilmr );
       vec.push_back( mem_.first  );
       vec.push_back( mem_.second );
     }
   return vec;
 }
 
-vector<int>
+std::vector<int>
 ME::lmmodFromDcc( int idcc )
 {  
-  vector<int> vec;
+  std::vector<int> vec;
   for( int iside=0; iside<=1;  iside++ )
     {
       int ilmr = lmr( idcc, iside );
       if( ilmr<0 ) continue;
       bool isBarrel_ = isBarrel( ilmr );
-      vector< int > vec_ = lmmodFromLmr( ilmr );
+      std::vector< int > vec_ = lmmodFromLmr( ilmr );
       for( unsigned ii=0; ii<vec_.size(); ii++ )
 	{
 	  int ilmmod_ = vec_[ii];
@@ -647,8 +647,8 @@ ME::lmmodFromDcc( int idcc )
 std::pair<int,int> 
 ME::pn( int ilmr, int ilmmod, ME::PN ipn )
 {
-  pair<int,int> pnpair_(0,0);
-  pair<int,int> mempair_ = memFromLmr(ilmr);
+  std::pair<int,int> pnpair_(0,0);
+  std::pair<int,int> mempair_ = memFromLmr(ilmr);
   if( isBarrel( ilmr ) )
     {
       pnpair_=MEEBGeom::pn( ilmmod );
@@ -670,6 +670,6 @@ ME::pn( int ilmr, int ilmmod, ME::PN ipn )
       mem_=mempair_.second;
       pn_=pnpair_.second;
     }      
-  return pair<int,int>(mem_,pn_);
+  return std::pair<int,int>(mem_,pn_);
 }
 
