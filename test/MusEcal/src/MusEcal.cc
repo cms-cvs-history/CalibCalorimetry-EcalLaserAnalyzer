@@ -515,7 +515,7 @@ MusEcal::setChannel( int ig, int ix, int iy, bool useGlobal )
 	  iy = etaphi_.second;
 	}
       // FIXME: ONLY BARREL FOR THE MOMENT
-      assert( ix!=0 && abs(ix)<=85 );
+      assert( ix!=0 && std::abs(ix)<=85 );
       assert( iy>=1 && iy<=360 );
       if( ix<0 ) reg_ = ME::iEBM;
       if( ix>0 ) reg_ = ME::iEBP;
