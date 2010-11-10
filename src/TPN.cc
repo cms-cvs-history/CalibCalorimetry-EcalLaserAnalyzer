@@ -1,7 +1,7 @@
 /* 
  *  \class TPN
  *
- *  $Date: 2008/04/28 14:42:22 $
+ *  $Date: 2009/06/02 12:55:21 $
  *  \author: Julie Malcles - CEA/Saclay
  */
 
@@ -76,9 +76,9 @@ void  TPN::setPNoPN0Cut(double mean, double sig){setCut(TPN::iPNoPN0,mean,sig);}
 void  TPN::setPNoPN1Cut(double mean, double sig){setCut(TPN::iPNoPN1,mean,sig);}
 
 
-vector<double> TPN::get(int ivar){ 
+std::vector<double> TPN::get(int ivar){ 
   
-  vector<double> res;
+  std::vector<double> res;
   
   if(ivar<nOutVar){
     
@@ -94,8 +94,8 @@ vector<double> TPN::get(int ivar){
   
 }
 
-vector<double>   TPN::getPN(){vector <double> x= get(TPN::iPN); return x;}
-vector<double>   TPN::getPNoPN(){vector <double> x= get(TPN::iPNoPN); return x;}
-vector<double>   TPN::getPNoPN0(){vector <double> x= get(TPN::iPNoPN0); return x;}
-vector<double>   TPN::getPNoPN1(){vector <double> x= get(TPN::iPNoPN1); return x;}
+std::vector<double>   TPN::getPN(){vector <double> x= get(TPN::iPN); return x;}
+std::vector<double>   TPN::getPNoPN(){vector <double> x= get(TPN::iPNoPN); return x;}
+std::vector<double>   TPN::getPNoPN0(){vector <double> x= get(TPN::iPNoPN0); return x;}
+std::vector<double>   TPN::getPNoPN1(){vector <double> x= get(TPN::iPNoPN1); return x;}
 
