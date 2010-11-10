@@ -1,7 +1,7 @@
 /* 
  *  \class EcalABAnalyzer
  *
- *  $Date: 2009/06/02 12:55:18 $
+ *  $Date: 2010/01/18 17:28:44 $
  *  primary author: Julie Malcles - CEA/Saclay
  *  author: Gautier Hamel De Monchenault - CEA/Saclay
  */
@@ -170,12 +170,12 @@ void EcalABAnalyzer::beginJob() {
   
   doesABTreeExist=true;
   
-  stringstream nameabinitfile;
+  std::stringstream nameabinitfile;
   nameabinitfile << resdir_ <<"/ABInit.root";
   alphainitfile=nameabinitfile.str();
   
-  stringstream nameabfile;  
-  stringstream link;  
+  std::stringstream nameabfile;  
+  std::stringstream link;  
   nameabfile << resdir_ <<"/AB.root";
   
   FILE *test;
@@ -220,7 +220,7 @@ void EcalABAnalyzer::beginJob() {
 
   // Define output results files' names
   
-  stringstream namefile;
+  std::stringstream namefile;
   namefile << resdir_ <<"/AB.root";
   alphafile=namefile.str(); 
 
@@ -262,7 +262,7 @@ void EcalABAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& c){
       std::cerr << "Error! can't get the product retrieving EE crystal data " << digiCollection_.c_str() << std::endl;
     } 
   } else {
-    cout <<" Wrong ecalPart in cfg file " << endl;
+    std::cout <<" Wrong ecalPart in cfg file " << std::endl;
     return;
   }
 
@@ -314,7 +314,7 @@ void EcalABAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& c){
     color = settings.wavelength;
     if( color <0 ) return;
 
-    vector<int>::iterator iter = find( colors.begin(), colors.end(), color );
+    std::vector<int>::iterator iter = find( colors.begin(), colors.end(), color );
     if( iter==colors.end() ){
       colors.push_back( color );
     }
@@ -468,7 +468,7 @@ void EcalABAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& c){
       // APD Pulse
       //=========== 
 
-      if( (*digiItr).size()>10) cout <<"SAMPLES SIZE > 10!" <<  (*digiItr).size()<< endl;
+      if( (*digiItr).size()>10) std::cout <<"SAMPLES SIZE > 10!" <<  (*digiItr).size()<< std::endl;
  
       // Loop on adc samples  
 
@@ -515,8 +515,8 @@ void EcalABAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& c){
 void EcalABAnalyzer::endJob() {
 //========================================================================
 
-  cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
-  cout <<   "\t+=+     Analyzing data: getting (alpha, beta)     +=+" << endl;
+  std::cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
+  std::cout <<   "\t+=+     Analyzing data: getting (alpha, beta)     +=+" << std::endl;
 
   // Adjust channel numbers for EE 
   //===============================
@@ -544,8 +544,8 @@ void EcalABAnalyzer::endJob() {
   //======================
 
   if(_fitab){
-    cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
-    cout <<   "\t+=+     Analyzing data: getting (alpha, beta)     +=+" << endl;
+    std::cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
+    std::cout <<   "\t+=+     Analyzing data: getting (alpha, beta)     +=+" << std::endl;
     TFile *fAB=0; TTree *ABInit=0;
     if(doesABTreeExist){
       fAB=new TFile(alphainitfile.c_str());
@@ -586,12 +586,12 @@ void EcalABAnalyzer::endJob() {
 
   
   if( !isGainOK )
-  cout <<    "\t+=+ ............................ WARNING! APD GAIN WAS NOT 1    +=+" << endl;
+  std::cout <<    "\t+=+ ............................ WARNING! APD GAIN WAS NOT 1    +=+" << std::endl;
   if( !isTimingOK )
-  cout <<    "\t+=+ ............................ WARNING! TIMING WAS BAD        +=+" << endl;
+  std::cout <<    "\t+=+ ............................ WARNING! TIMING WAS BAD        +=+" << std::endl;
 
-  cout <<    "\t+=+    .................................... done  +=+" << endl;
-  cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
+  std::cout <<    "\t+=+    .................................... done  +=+" << std::endl;
+  std::cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
   }
   
 

@@ -221,18 +221,18 @@ protected:
 
 //   MEIntervals* pnIntervals( int type );
 //   MEKeyInterval* topPnInterval( int type ) { return pnIntervals(type)->topInterval(); }
-//   map< MEKeyInterval*, int >& choices( int type ) { return _choices[type]; }
+//   std::map< MEKeyInterval*, int >& choices( int type ) { return _choices[type]; }
  
 //   // create corrections
 //   virtual void createCorrectors();
   
 //   // apply corrections
 //   void applyCorrections( MELeaf* leaf, int type, int var0, int var1, 
-// 			 vector< MERunKey>& keys, vector< MERunKey>& altkeys,
-// 			 vector< double >& val, vector< double >& cor_val, vector< double >& glued_val, vector< double >& cor_and_glued_val,
-// 			 vector< bool   >&  ok, vector< bool   >& cor_ok , vector< bool   >& glued_ok,  vector< bool   >& cor_and_glued_ok  );
+// 			 std::vector< MERunKey>& keys, std::vector< MERunKey>& altkeys,
+// 			 std::vector< double >& val, std::vector< double >& cor_val, std::vector< double >& glued_val, std::vector< double >& cor_and_glued_val,
+// 			 std::vector< bool   >&  ok, std::vector< bool   >& cor_ok , std::vector< bool   >& glued_ok,  std::vector< bool   >& cor_and_glued_ok  );
 
-//   void rabouteVector( MEKeyInterval*, int level, const vector< MERunKey >& keys, vector< double >& val, vector< bool >& ok, 
+//   void rabouteVector( MEKeyInterval*, int level, const std::vector< MERunKey >& keys, std::vector< double >& val, std::vector< bool >& ok, 
 // 		      MERunKey curKey=0, unsigned nbuf=2, unsigned nave=10 );
 //   void rabouteVector( MEKeyInterval*, int level, MEVarMap& val, MEBoolMap& ok, 
 // 		      MERunKey curKey=0, unsigned nbuf=2, unsigned nave=10 );
@@ -272,13 +272,13 @@ protected:
 //   unsigned _corFitDegree;
 //   double _corX0;
 //   double _corY0;
-//   vector< double > _corBeta;
+//   std::vector< double > _corBeta;
  
 //   // intervals, as a function of the Leaf (at the Side or Module level)
-//   map< MELeaf*, MEIntervals* > _intervals[MusEcalHist::iSizeT];
+//   std::map< MELeaf*, MEIntervals* > _intervals[MusEcalHist::iSizeT];
 
 //   // choice of variables in PN intervals
-//   map< MEKeyInterval*, int > _choices[MusEcalHist::iSizeT];
+//   std::map< MEKeyInterval*, int > _choices[MusEcalHist::iSizeT];
 
   
 //   // range range and normalisation
