@@ -9,8 +9,6 @@
 
 #include <FWCore/Framework/interface/EDAnalyzer.h>
 
-using namespace std;
-
 class TShapeAnalysis;
 class TAPDPulse;
 class TMom;
@@ -74,7 +72,7 @@ class EcalABAnalyzer: public edm::EDAnalyzer{
   unsigned int  _nevtmax;
   double        _noise;
   double        _chi2cut;
-  string        _ecalPart;
+  std::string   _ecalPart;
   int           _fedid;
   double        _qualpercent;
   int           _debug;
@@ -83,16 +81,16 @@ class EcalABAnalyzer: public edm::EDAnalyzer{
   TMom *Delta01;
   TMom *Delta12;
   
-  string  resdir_;
-  string  digiCollection_;
-  string  digiProducer_;
-  string  eventHeaderCollection_;
-  string  eventHeaderProducer_;
+  std::string  resdir_;
+  std::string  digiCollection_;
+  std::string  digiProducer_;
+  std::string  eventHeaderCollection_;
+  std::string  eventHeaderProducer_;
   
   // Output file names
   
-  string  alphafile;
-  string  alphainitfile;
+  std::string  alphafile;
+  std::string  alphainitfile;
 
   TShapeAnalysis *shapana;
   unsigned int nevtAB[NCRYSEB];
