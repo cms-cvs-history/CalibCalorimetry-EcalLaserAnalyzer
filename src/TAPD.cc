@@ -1,7 +1,7 @@
 /* 
  *  \class TAPD
  *
- *  $Date: 2009/06/02 12:55:20 $
+ *  $Date: 2010/01/04 15:06:28 $
  *  \author: Julie Malcles  - CEA/Saclay
  */
 
@@ -82,12 +82,12 @@ void TAPD::addEntry(double apd, double pn, double pn0, double pn1, double time, 
 
   for(int ivar=0;ivar<nOutVar;ivar++){
     mom[ivar]->addEntry(val[ivar],valcuts[ivar]); 
-    //    cout << "addEntry: val[ivar=" << ivar <<"] = "<<val[ivar]<< endl;
+    //    std::cout << "addEntry: val[ivar=" << ivar <<"] = "<<val[ivar]<< std::endl;
     
     for(size_t ic=0;ic<_cutvars[ivar].size();ic++){
-      //      cout << "addEntry: valcuts[ivar="<< ivar <<"][ic="<<ic<<"] = "<<valcuts[ivar].at(ic)<< endl;
+      //      std::cout << "addEntry: valcuts[ivar="<< ivar <<"][ic="<<ic<<"] = "<<valcuts[ivar].at(ic)<< std::endl;
       for(size_t iv=0;iv<_cutvars[ivar].size();iv++){
-	//	cout <<"low cut:"<<_apdcuts[0][ivar].at(iv)<<", high cut:"<<_apdcuts[1][ivar].at(iv)<<", cutvar: "<<_cutvars[ivar].at(iv)<< endl;
+	//	std::cout <<"low cut:"<<_apdcuts[0][ivar].at(iv)<<", high cut:"<<_apdcuts[1][ivar].at(iv)<<", cutvar: "<<_cutvars[ivar].at(iv)<< std::endl;
       }
     }
   }
@@ -212,9 +212,9 @@ void  TAPD::set2DTimeCut(std::vector<double> lowCut,std::vector<double> highCut)
 
 
 
-vector<double> TAPD::get(int ivar){ 
+std::vector<double> TAPD::get(int ivar){ 
 
-  vector<double> res;
+  std::vector<double> res;
   
   if(ivar<nOutVar){
 
@@ -227,20 +227,20 @@ vector<double> TAPD::get(int ivar){
 
   }
 
-  //  cout << "In get: ivar="<< ivar << ", mean="<< mom[ivar]->getMean()<<" res size="<< res.size()<< endl;
+  //  std::cout << "In get: ivar="<< ivar << ", mean="<< mom[ivar]->getMean()<<" res size="<< res.size()<< std::endl;
 
   return res;
 
 }
 
-vector<double>   TAPD::getAPD(){vector<double> x=get(TAPD::iAPD); return x;}
-vector<double>   TAPD::getAPDoPN(){vector<double> x=get(TAPD::iAPDoPN); return x;}
-vector<double>   TAPD::getAPDoPN0(){vector<double> x=get(TAPD::iAPDoPN0); return x;}
-vector<double>   TAPD::getAPDoPN1(){vector<double> x=get(TAPD::iAPDoPN1); return x;}
-vector<double>   TAPD::getTime(){vector<double> x=get(TAPD::iTime); return x;}
-vector<double>   TAPD::getAPDoAPD0(){
-vector<double> x=get(TAPD::iAPDoAPD0); 
-// cout<< "In GetAPDoAPD0: x[0]="<< x.at(0) << endl;
+std::vector<double>   TAPD::getAPD(){std::vector<double> x=get(TAPD::iAPD); return x;}
+std::vector<double>   TAPD::getAPDoPN(){std::vector<double> x=get(TAPD::iAPDoPN); return x;}
+std::vector<double>   TAPD::getAPDoPN0(){std::vector<double> x=get(TAPD::iAPDoPN0); return x;}
+std::vector<double>   TAPD::getAPDoPN1(){std::vector<double> x=get(TAPD::iAPDoPN1); return x;}
+std::vector<double>   TAPD::getTime(){std::vector<double> x=get(TAPD::iTime); return x;}
+std::vector<double>   TAPD::getAPDoAPD0(){
+std::vector<double> x=get(TAPD::iAPDoAPD0); 
+// std::cout<< "In GetAPDoAPD0: x[0]="<< x.at(0) << std::endl;
  return x;
 }
-vector<double>   TAPD::getAPDoAPD1(){vector<double> x=get(TAPD::iAPDoAPD1); return x;}
+std::vector<double>   TAPD::getAPDoAPD1(){std::vector<double> x=get(TAPD::iAPDoAPD1); return x;}
