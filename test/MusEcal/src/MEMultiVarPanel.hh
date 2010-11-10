@@ -11,7 +11,6 @@
 #include <TGComboBox.h>
 
 #include <vector>
-using namespace std;
 
 class MusEcalGUI;
 
@@ -31,8 +30,8 @@ private:
   TGLayoutHints* fHint4;
   TGLayoutHints* fHint5;
 
-  vector< TGComboBox* >   f_ComboBox;
-  vector< TGGroupFrame* > f_GroupFrame;
+  std::vector< TGComboBox* >   f_ComboBox;
+  std::vector< TGGroupFrame* > f_GroupFrame;
 
   TGTextButton* f_Go_Button;
 
