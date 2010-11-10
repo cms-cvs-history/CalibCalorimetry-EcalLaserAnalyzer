@@ -15,9 +15,6 @@ class TPNPulse;
 class TMem;
 
 
-using namespace std;
-
-
 // Define geometrical constants 
 // NOT the same for "EB" and "EE"
 //
@@ -155,7 +152,7 @@ class EcalLaserAnalyzer2: public edm::EDAnalyzer{
   // Count Laser Events
   int laserEvents;
 
-  vector<int> colors;
+  std::vector<int> colors;
   std::map<int, int> channelMapEE;
   std::vector<int> dccMEM;
   std::vector<int> modules;
@@ -221,7 +218,7 @@ class EcalLaserAnalyzer2: public edm::EDAnalyzer{
 
   // Declaration of shapes
 
-  vector<  double > shapesVec;
+  std::vector<  double > shapesVec;
   double shapes[NSAMPSHAPES];
   double shapeCorrection;
   bool isMatacqOK;
