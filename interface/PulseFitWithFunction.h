@@ -23,8 +23,6 @@
 
 #include <CalibCalorimetry/EcalLaserAnalyzer/interface/PulseFit.h>
 
-using namespace std;
-
 class PulseFitWithFunction: public TObject 
 {
  public:
