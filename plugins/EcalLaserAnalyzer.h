@@ -7,8 +7,6 @@
 
 #include <FWCore/Framework/interface/EDAnalyzer.h>
 
-using namespace std;
-
 class TFile;
 class TTree;
 class TProfile;
@@ -95,7 +93,7 @@ class EcalLaserAnalyzer: public edm::EDAnalyzer{
   unsigned int  _nevtmax;
   double        _noise;
   double        _chi2cut;
-  string        _ecalPart;
+  std::string   _ecalPart;
   bool          _docorpn;
   int           _fedid;
   bool          _saveallevents;
@@ -110,21 +108,21 @@ class EcalLaserAnalyzer: public edm::EDAnalyzer{
   
   bool doesABTreeExist;
   
-  string  resdir_;
-  string  pncorfile_;
-  string  digiCollection_;
-  string  digiPNCollection_;
-  string  digiProducer_;
-  string  eventHeaderCollection_;
-  string  eventHeaderProducer_;
+  std::string  resdir_;
+  std::string  pncorfile_;
+  std::string  digiCollection_;
+  std::string  digiPNCollection_;
+  std::string  digiProducer_;
+  std::string  eventHeaderCollection_;
+  std::string  eventHeaderProducer_;
 
   // Output file names
 
-  string  alphafile;
-  string  alphainitfile;
-  string  ADCfile;
-  string  APDfile;
-  string  resfile;
+  std::string  alphafile;
+  std::string  alphainitfile;
+  std::string  ADCfile;
+  std::string  APDfile;
+  std::string  resfile;
 
   
   TShapeAnalysis * shapana;
