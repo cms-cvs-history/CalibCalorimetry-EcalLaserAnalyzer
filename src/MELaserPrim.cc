@@ -135,7 +135,7 @@ MELaserPrim::init()
 
   if( _inpath=="0" )
     {
-      if( verbose_ ) cout << "no input file" << endl;
+      if( verbose_ ) std::cout << "no input file" << std::endl;
       init_ok = true;
       return; // GHM
     }
@@ -178,9 +178,9 @@ MELaserPrim::init()
 
       if( verbose_ )
 	{
-	  cout << _APDPN_fname << " ok=" << apdpn_ok << endl;
-	  cout << _AB_fname    << " ok=" << ab_ok    << endl;
-	  cout << _MTQ_fname   << " ok=" << mtq_ok    << endl;
+	  std::cout << _APDPN_fname << " ok=" << apdpn_ok << std::endl;
+	  std::cout << _AB_fname    << " ok=" << ab_ok    << std::endl;
+	  std::cout << _MTQ_fname   << " ok=" << mtq_ok    << std::endl;
 	}
       if (!apdpn_ok || !pn_ok ) return; // FIXME !
   
@@ -205,7 +205,7 @@ MELaserPrim::init()
       }
 
       if( _color != ME::iIRed && _color != ME::iBlue ){ 
-	cout << "MELaserPrim::init() -- Fatal Error -- Wrong Laser Color : " << _color << " ---- Abort " << endl;
+	std::cout << "MELaserPrim::init() -- Fatal Error -- Wrong Laser Color : " << _color << " ---- Abort " << std::endl;
 	return;
       }
       
@@ -286,7 +286,7 @@ MELaserPrim::init()
 
       if( verbose_ )
 	{
-	  cout << _TPAPD_fname << " ok=" << tpapd_ok << endl;
+	  std::cout << _TPAPD_fname << " ok=" << tpapd_ok << std::endl;
 	}
       if (!tpapd_ok ) return;
   
@@ -641,7 +641,7 @@ MELaserPrim::fillHistograms()
 	      assert( pn_pnID==jj );
 	      
 	      // get the PN number
-	      pair<int,int> memPn_ = ME::pn( _lmr, module_, (ME::PN)jj );
+	      std::pair<int,int> memPn_ = ME::pn( _lmr, module_, (ME::PN)jj );
 	      if( _isBarrel )
 		{
 		  //		  assert( memPn_.first%600==_dcc%600 );
@@ -698,7 +698,7 @@ MELaserPrim::fillHistograms()
 	      t_t[t_name]->Fill();
 	      
 	    }
-	  //      cout << "Module=" << module_ << "\tPNA=" << pn_[0] << "\tPNB=" << pn_[1] << endl;
+	  //      std::cout << "Module=" << module_ << "\tPNA=" << pn_[0] << "\tPNB=" << pn_[1] << std::endl;
 
 // 	  if( _isBarrel )
 // 	    jentry += 4;
@@ -760,7 +760,7 @@ MELaserPrim::fillHistograms()
       // Laser Run
       //
       t_name = lmfLaserName( ME::iLmfLaserRun, _type );
-      //cout << "Fill "<< t_name << endl;
+      //std::cout << "Fill "<< t_name << std::endl;
       i_t[t_name+separator+"LOGIC_ID"]       = logic_id_; 
       i_t[t_name+separator+"NEVENTS"]        =  _events;
       i_t[t_name+separator+"QUALITY_FLAG"]   = 1;                // fixme
@@ -770,7 +770,7 @@ MELaserPrim::fillHistograms()
       // Laser Config
       //
       t_name = lmfLaserName( ME::iLmfLaserConfig, _type );
-      //cout << "Fill "<< t_name << endl;
+      //std::cout << "Fill "<< t_name << std::endl;
       i_t[t_name+separator+"LOGIC_ID"]        = logic_id_;
       i_t[t_name+separator+"WAVELENGTH"]      = _color;
       i_t[t_name+separator+"VFE_GAIN"]        = _mgpagain; // fixme 
@@ -881,7 +881,7 @@ MELaserPrim::fillHistograms()
 
 // 	    }
 
-// 	  //      cout << "Module=" << module_ << "\tPNA=" << pn_[0] << "\tPNB=" << pn_[1] << endl;
+// 	  //      std::cout << "Module=" << module_ << "\tPNA=" << pn_[0] << "\tPNB=" << pn_[1] << std::endl;
 
 // 	  jentry += 4;
 // 	}
@@ -894,7 +894,7 @@ MELaserPrim::fillHistograms()
 //       // Test Pulse Run
 //       //
 //       t_name = lmfLaserName( ME::iLmfTestPulseRun, _type );
-//       //cout << "Fill "<< t_name << endl;
+//       //std::cout << "Fill "<< t_name << std::endl;
 //       i_t[t_name+separator+"LOGIC_ID"]       = logic_id_;  // fixme --- is there a channelview for this?
 //       i_t[t_name+separator+"NEVENTS"]        =  _events;
 //       i_t[t_name+separator+"QUALITY_FLAG"]   = 1;                // fixme
@@ -904,7 +904,7 @@ MELaserPrim::fillHistograms()
 //       // Test Pulse Config
 //       //
 //       t_name = lmfLaserName( ME::iLmfTestPulseConfig, _type );
-//       //cout << "Fill "<< t_name << endl;
+//       //std::cout << "Fill "<< t_name << std::endl;
 //       i_t[t_name+separator+"LOGIC_ID"]        = logic_id_;  // fixme
 //       i_t[t_name+separator+"VFE_GAIN"]        = _mgpagain; // fixme 
 //       i_t[t_name+separator+"PN_GAIN"]         = _memgain;  // fixme
@@ -915,7 +915,7 @@ MELaserPrim::fillHistograms()
   // Laser Run IOV
   //
   t_name = "LMF_RUN_IOV";
-  //cout << "Fill "<< t_name << endl;
+  //std::cout << "Fill "<< t_name << std::endl;
   i_t[t_name+separator+"TAG_ID"]        = 0;       // fixme
   i_t[t_name+separator+"SUB_RUN_NUM"]   = _run;      // fixme
   i_t[t_name+separator+"SUB_RUN_START_LOW" ] = ME::time_low( _ts_beg );
@@ -937,7 +937,7 @@ MELaserPrim::writeHistograms()
   out_file = new TFile( _outfile, "RECREATE" );
   //  out_file->cd();
 
-  map< TString, TH2* >::iterator it;
+  std::map< TString, TH2* >::iterator it;
 
   for( it=i_h.begin(); it!=i_h.end(); it++ )
     {
@@ -951,14 +951,14 @@ MELaserPrim::writeHistograms()
       delete it->second;
     }
 
-  map< TString, TTree* >::iterator it_t;
+  std::map< TString, TTree* >::iterator it_t;
   for( it_t=t_t.begin(); it_t!=t_t.end(); it_t++ )
     {
       it_t->second->Write();
       delete it_t->second;
     }
 
-  //  cout << "Closing " << _outfile << endl;
+  //  std::cout << "Closing " << _outfile << std::endl;
   out_file->Close();
   delete out_file;
   out_file=0;
@@ -974,28 +974,28 @@ MELaserPrim::~MELaserPrim()
   delete tppn_tree;
   if( apdpn_file!=0 )
     {
-      //      cout << "Closing apdpn_file " << endl;
+      //      std::cout << "Closing apdpn_file " << std::endl;
       apdpn_file->Close();
       delete apdpn_file;
       apdpn_file = 0;
     }
   if( ab_file!=0 )
     {
-      //      cout << "Closing ab_file " << endl;
+      //      std::cout << "Closing ab_file " << std::endl;
       ab_file->Close();
       delete ab_file;
       ab_file = 0;
     }
   if( mtq_file!=0 )
     {
-      //      cout << "Closing mtq_file " << endl;
+      //      std::cout << "Closing mtq_file " << std::endl;
       mtq_file->Close();
       delete mtq_file;
       mtq_file = 0;
     }
   if( tpapd_file!=0 )
     {
-      //      cout << "Closing tpapd_file " << endl;
+      //      std::cout << "Closing tpapd_file " << std::endl;
       tpapd_file->Close();
       delete tpapd_file;
       tpapd_file = 0;
@@ -1006,7 +1006,7 @@ void
 MELaserPrim::print( ostream& o )
 {
   o << "DCC/SM/side/type/color/run/ts " << _dcc << "/" << _sm << "/" << _side << "/" 
-    << _type << "/" << _color << "/" << _run << "/" << _ts << endl;
+    << _type << "/" << _color << "/" << _run << "/" << _ts << std::endl;
   
 //   for( int ix=ixmin; ix<ixmax; ix++ )
 //     {
@@ -1199,7 +1199,7 @@ MELaserPrim::setVal( const char* tname, const char* vname, float val )
   // ghm
   if( f_t.count(key_)!=1 )
     {
-      cout << key_ << endl;
+      std::cout << key_ << std::endl;
     }
   assert( f_t.count(key_)==1 );
   f_t[key_]  = val;
@@ -1246,7 +1246,7 @@ MELaserPrim::setHistoStyle( TH1* h )
 void
 MELaserPrim::refresh()
 {
-  map< TString, TH2* >::iterator it;
+  std::map< TString, TH2* >::iterator it;
 
   for( it=i_h.begin(); it!=i_h.end(); it++ )
     {
@@ -1262,7 +1262,7 @@ MELaserPrim::refresh()
     }
   f_h.clear();
 
-  map< TString, TTree* >::iterator it_t;
+  std::map< TString, TTree* >::iterator it_t;
   for( it_t=t_t.begin(); it_t!=t_t.end(); it_t++ )
     {
       delete it_t->second;
