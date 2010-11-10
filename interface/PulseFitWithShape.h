@@ -6,7 +6,6 @@
 #define PulseFitWithShape_H
 #include "TObject.h"
 #include<vector>
-using namespace std;
 
 class PulseFitWithShape: public TObject 
 {
@@ -18,7 +17,7 @@ class PulseFitWithShape: public TObject
   virtual ~PulseFitWithShape() ;
 
   // Initialize 
-  virtual void init(int,int,int,int,int,vector <double>,double) ;
+  virtual void init(int,int,int,int,int,std::vector <double>,double) ;
 
   // Compute amplitude of a channel
 
@@ -37,8 +36,8 @@ class PulseFitWithShape: public TObject
   int fNsamplesShape ;  // maximum number of samples into framelegth
   double fNoise;
   
-  vector < double > pshape;  
-  vector < double > dshape; 
+  std::vector < double > pshape;  
+  std::vector < double > dshape; 
 
   int     fNb_iter ; // maximum number of iterations
   int     fNum_samp_bef_max  ; // number of samples before maximum sample
