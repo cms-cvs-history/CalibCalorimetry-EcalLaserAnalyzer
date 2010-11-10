@@ -2,7 +2,6 @@
 #define TAPD_H
 
 #include <vector>
-using namespace std;
 
 class TMom;
 
@@ -53,14 +52,14 @@ class TAPD
   void set2DAPDoAPD1Cut(std::vector<double>,std::vector<double> );
   void set2DTimeCut(std::vector<double>,std::vector<double> );
 
-  vector<double> get(int);
-  vector<double> getAPD();
-  vector<double> getAPDoPN();
-  vector<double> getAPDoPN0();
-  vector<double> getAPDoPN1();
-  vector<double> getAPDoAPD0();
-  vector<double> getAPDoAPD1();
-  vector<double> getTime();
+  std::vector<double> get(int);
+  std::vector<double> getAPD();
+  std::vector<double> getAPDoPN();
+  std::vector<double> getAPDoPN0();
+  std::vector<double> getAPDoPN1();
+  std::vector<double> getAPDoAPD0();
+  std::vector<double> getAPDoAPD1();
+  std::vector<double> getTime();
  
 
   
