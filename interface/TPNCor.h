@@ -4,8 +4,6 @@
 #include "TObject.h"
 #include <map>
 
-using namespace std;
-
 class TPNCor: public TObject 
 {
   
@@ -16,7 +14,7 @@ class TPNCor: public TObject
 
  public:
   // Default Constructor, mainly for Root
-  TPNCor(string filename);
+  TPNCor(std::string filename);
   
   // Destructor: Does nothing
   virtual ~TPNCor();
