@@ -1,7 +1,7 @@
 /* 
  *  \class TMatacq
  *
- *  $Date: 2008/04/09 14:12:06 $
+ *  $Date: 2009/06/02 12:55:21 $
  *  \author: Patrice Verrecchia - CEA/Saclay
  */
 #include <CalibCalorimetry/EcalLaserAnalyzer/interface/TMatacq.h>
@@ -61,14 +61,14 @@ int TMatacq::rawPulseAnalysis(Int_t Nsamp, Double_t *adc)  // GHM
 {
   using namespace std;
 
-  //  cout << "Entering rawPulseAnalysis" << endl;
+  //  std::cout << "Entering rawPulseAnalysis" << std::endl;
 
   int k,ithr;
   double dsum=0.,dsum2=0.;
   
-  //  cout << "calling init" << endl;
+  //  std::cout << "calling init" << std::endl;
   init();
-  //  cout << ".......done" << endl;
+  //  std::cout << ".......done" << std::endl;
 
   if(Nsamp != fNsamples) {
       printf("found different number of samples fNsamples=%d Nsamp=%d\n",fNsamples,Nsamp);
