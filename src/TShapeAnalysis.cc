@@ -1,7 +1,7 @@
 /* 
  *  \class TShapeAnalysis
  *
- *  $Date: 2009/06/02 12:55:21 $
+ *  $Date: 2010/01/04 15:06:28 $
  *  original author: Patrice Verrecchia 
  *   modified by Julie Malcles - CEA/Saclay
  */
@@ -124,7 +124,7 @@ void TShapeAnalysis::init(TTree *tAB, double alpha0, double beta0, double width0
       
       tABinit->GetEntry(cris);
       
-      //      cout<< "Loop 1 "<< cris<<" "<<alphai<< endl;
+      //      std::cout<< "Loop 1 "<< cris<<" "<<alphai<< std::endl;
 
       putalphaVal(cris,alphai);
       putchi2Val(cris,chi2i);
