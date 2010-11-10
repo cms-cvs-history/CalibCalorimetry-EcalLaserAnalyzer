@@ -57,7 +57,7 @@ double TFParams::fitpj(double **adcval , double *parout , double **db_i, double 
   double bi[ntrack][2],dbi[ntrack][2];
   double zi[ntrack][2] ;
   double par3degre[3] ;
-  int    ioktk[ntrack],iokchi2[ntrack],nk,nborn_min,nborn_max ;
+  int    ioktk[ntrack],iokchi2[ntrack],nk,nborn_min=0,nborn_max=0;
   double cti[ntrack][6],dm1i[ntrack][4]; 
   double aiter[10][3];       
   double par[4],tsig[1];
@@ -235,12 +235,12 @@ double TFParams::fitpj(double **adcval , double *parout , double **db_i, double 
 
         // start with degree 3 polynomial .... 
 	//fit3 =polfit(ns ,imax[nk] ,par3degre ,errpj ,amplu ) ;
-	//	cout << "Poly Fit Param  :"<< par3degre[0] <<" "<< par3degre[1]<< endl; 
+	//	std::cout << "Poly Fit Param  :"<< par3degre[0] <<" "<< par3degre[1]<< std::endl; 
         
 	// start with parabol
 	//fit3 = parab(amplu,4,12,par3degre) ;
 	fit3 = parab(amplu,2,9,par3degre) ;
-	//cout << "Parab Fit Param :"<< par3degre[0] <<" "<< par3degre[1]<< endl; 
+	//std::cout << "Parab Fit Param :"<< par3degre[0] <<" "<< par3degre[1]<< std::endl; 
 
 
 	// start with basic initial values
@@ -437,9 +437,9 @@ double TFParams::fitpj(double **adcval , double *parout , double **db_i, double 
 
       if (debug==1){
 	if (nevt==198 || nevt==199){
-	  cout << "adc123 pour l'evt " << nevt <<" = "<<adcval[nevt][nborn_min]<<" = "<<adcval[nevt][imax[nevt]]<<" = "<<adcval[nevt][nborn_max]<<endl;
-	  cout << "chi2s  pour l'evt " << nevt <<" = "<< chi2s<<" "<< chi2<<" "<< ns<<"  "<<iter<<endl;
-	  cout << "chi2tot           " << nevt <<" = "<< chi2tot<<"  "<<iter<<endl;
+	  std::cout << "adc123 pour l'evt " << nevt <<" = "<<adcval[nevt][nborn_min]<<" = "<<adcval[nevt][imax[nevt]]<<" = "<<adcval[nevt][nborn_max]<<std::endl;
+	  std::cout << "chi2s  pour l'evt " << nevt <<" = "<< chi2s<<" "<< chi2<<" "<< ns<<"  "<<iter<<std::endl;
+	  std::cout << "chi2tot           " << nevt <<" = "<< chi2tot<<"  "<<iter<<std::endl;
 	}
       }
       
@@ -563,8 +563,8 @@ double TFParams::fitpj(double **adcval , double *parout , double **db_i, double 
   }
 
   if (debug==1){
-    cout << " Final chi2 / NDOF  :  "<< chi2tot/nevtmax << endl;
-    cout << " Final (alpha,beta) : ("<< a1<<","<<a2<<")"<< endl;
+    std::cout << " Final chi2 / NDOF  :  "<< chi2tot/nevtmax << std::endl;
+    std::cout << " Final (alpha,beta) : ("<< a1<<","<<a2<<")"<< std::endl;
   }
 
   return chi2tot/nevtmax ;
