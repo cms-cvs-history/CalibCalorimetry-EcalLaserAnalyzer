@@ -1,4 +1,4 @@
-// $Id: EcalTestPulseAnalyzer.h,v 1.1 2009/06/02 12:55:19 malcles Exp $
+// $Id: EcalTestPulseAnalyzer.h,v 1.2 2010/01/18 17:28:45 ferriff Exp $
 
 #include <memory>
 #include <FWCore/Framework/interface/EDAnalyzer.h>
@@ -66,21 +66,21 @@ class EcalTestPulseAnalyzer: public edm::EDAnalyzer{
   unsigned int  _niter ;
   double        _chi2max ;
   double        _timeofmax ;
-  string        _ecalPart;
+  std::string   _ecalPart;
   int           _fedid;
   
-  string  resdir_;
-  string  digiCollection_;
-  string  digiPNCollection_;
-  string  digiProducer_;
-  string  eventHeaderCollection_;
-  string  eventHeaderProducer_;
+  std::string  resdir_;
+  std::string  digiCollection_;
+  std::string  digiPNCollection_;
+  std::string  digiProducer_;
+  std::string  eventHeaderCollection_;
+  std::string  eventHeaderProducer_;
    
 
   // Output file names
 
-  string  rootfile;
-  string  resfile;
+  std::string  rootfile;
+  std::string  resfile;
 
   //  Define geometrical constants
   //  Default values correspond to "EB" geometry (1700 crystals)
@@ -143,9 +143,9 @@ class EcalTestPulseAnalyzer: public edm::EDAnalyzer{
   TTree *respntrees;
 
 
-  map<int, int> channelMapEE;
-  vector<int> dccMEM;
-  vector<int> modules;
+  std::map<int, int> channelMapEE;
+  std::vector<int> dccMEM;
+  std::vector<int> modules;
 
 
   // Declaration of leaves types 
