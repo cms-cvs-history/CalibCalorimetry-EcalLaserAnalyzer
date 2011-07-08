@@ -1,7 +1,7 @@
 /* 
  *  \class EcalLaserAnalyzer
  *
- *  $Date: 2009/06/02 12:55:19 $
+ *  $Date: 2010/01/04 15:06:28 $
  *  primary author: Julie Malcles - CEA/Saclay
  *  author: Gautier Hamel De Monchenault - CEA/Saclay
  */
@@ -210,7 +210,7 @@ void EcalLaserAnalyzer::beginJob() {
   
   for (unsigned int i=0;i<nCrys;i++){
     
-    stringstream name;
+    std::stringstream name;
     name << "ADCTree" <<i+1;
     ADCtrees[i]= new TTree(name.str().c_str(),name.str().c_str());
 
@@ -250,11 +250,11 @@ void EcalLaserAnalyzer::beginJob() {
   
   doesABTreeExist=true;
 
-  stringstream nameabinitfile;
+  std::stringstream nameabinitfile;
   nameabinitfile << resdir_ <<"/ABInit.root";
   alphainitfile=nameabinitfile.str();
   
-  stringstream nameabfile;  
+  std::stringstream nameabfile;  
   nameabfile << resdir_ <<"/AB.root";
   alphafile=nameabfile.str();
   
@@ -295,7 +295,7 @@ void EcalLaserAnalyzer::beginJob() {
 
   //  2) APD file
   
-  stringstream nameapdfile;
+  std::stringstream nameapdfile;
   nameapdfile << resdir_ <<"/APDPN_LASER.root";      
   resfile=nameapdfile.str();
 
@@ -349,7 +349,7 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
 	digiCollection_.c_str() << std::endl;
     } 
   } else {
-    cout <<" Wrong ecalPart in cfg file " << endl;
+    std::cout <<" Wrong ecalPart in cfg file " << std::endl;
     return;
   }
   
@@ -413,10 +413,10 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
     color = settings.wavelength;
     if( color<0 ) return;
     
-    vector<int>::iterator iter = find( colors.begin(), colors.end(), color );
+    std::vector<int>::iterator iter = find( colors.begin(), colors.end(), color );
     if( iter==colors.end() ){
       colors.push_back( color );
-      cout <<" new color found "<< color<<" "<< colors.size()<< endl;
+      std::cout <<" new color found "<< color<<" "<< colors.size()<< std::endl;
     }
   }
 
@@ -440,8 +440,8 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
   unsigned int samplemax=0;
   int  pnGain=0;
   
-  map <int, vector<double> > allPNAmpl;
-  map <int, vector<double> > allPNGain;
+  std::map <int, std::vector<double> > allPNAmpl;
+  std::map <int, std::vector<double> > allPNGain;
 
   
   // Loop on PNs digis
@@ -451,8 +451,8 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
     
     EcalPnDiodeDetId pnDetId = EcalPnDiodeDetId((*pnItr).id());
     
-    if (_debug==1) cout <<"-- debug -- Inside PNDigi - pnID=" <<
-		     pnDetId.iPnId()<<", dccID="<< pnDetId.iDCCId()<< endl;
+    if (_debug==1) std::cout <<"-- debug -- Inside PNDigi - pnID=" <<
+		     pnDetId.iPnId()<<", dccID="<< pnDetId.iDCCId()<< std::endl;
 
     // Skip MEM DCC without relevant data
   
@@ -468,7 +468,7 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
       if (samId>0) pnGain=int(TMath::Max(pnG[samId],pnGain));     
     }
     
-    if( pnGain!=1 ) cout << "PN gain different from 1"<< endl;
+    if( pnGain!=1 ) std::cout << "PN gain different from 1"<< std::endl;
     
     // Calculate amplitude from pulse
     
@@ -489,8 +489,8 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
 
     allPNAmpl[pnDetId.iDCCId()].push_back(pnAmpl);
       
-    if (_debug==1) cout <<"-- debug -- Inside PNDigi - PNampl=" << 
-		     pnAmpl<<", PNgain="<< pnGain<<endl;  
+    if (_debug==1) std::cout <<"-- debug -- Inside PNDigi - PNampl=" << 
+		     pnAmpl<<", PNgain="<< pnGain<<std::endl;  
   }
   
   // ===========================
@@ -540,9 +540,9 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
 
       setGeomEB(etaG, phiG, module, tower, strip, xtal, apdRefTT, channel, lmr);      
       
-      if (_debug==1) cout << "-- debug -- Inside EBDigi - towerID:"<< towerID<<
+      if (_debug==1) std::cout << "-- debug -- Inside EBDigi - towerID:"<< towerID<<
 		       " channelID:" <<channelID<<" module:"<< module<<
-		       " modules:"<<modules.size()<< endl;
+		       " modules:"<<modules.size()<< std::endl;
       
       // APD Pulse
       //=========== 
@@ -643,14 +643,14 @@ void EcalLaserAnalyzer:: analyze( const edm::Event & e, const  edm::EventSetup& 
       setGeomEE(etaG, phiG, iX, iY, iZ, module, tower, ch, apdRefTT, channel, lmr);
       
       
-      if (_debug==1) cout << "-- debug -- Inside EEDigi - towerID:"<< towerID<<
+      if (_debug==1) std::cout << "-- debug -- Inside EEDigi - towerID:"<< towerID<<
 		       " channelID:" <<channelID<<" module:"<< module<<
-		       " modules:"<<modules.size()<< endl;
+		       " modules:"<<modules.size()<< std::endl;
       
       // APD Pulse
       //=========== 
 
-      if( (*digiItr).size()>10) cout <<"SAMPLES SIZE > 10!" <<  (*digiItr).size()<< endl;
+      if( (*digiItr).size()>10) std::cout <<"SAMPLES SIZE > 10!" <<  (*digiItr).size()<< std::endl;
  
       // Loop on adc samples  
 
@@ -736,8 +736,8 @@ void EcalLaserAnalyzer::endJob() {
   //======================
 
   if(_fitab){
-    cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
-    cout <<   "\t+=+     Analyzing data: getting (alpha, beta)     +=+" << endl;
+    std::cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
+    std::cout <<   "\t+=+     Analyzing data: getting (alpha, beta)     +=+" << std::endl;
     TFile *fAB=0; TTree *ABInit=0;
     if(doesABTreeExist){
       fAB=new TFile(alphainitfile.c_str());
@@ -746,8 +746,8 @@ void EcalLaserAnalyzer::endJob() {
       ABInit = (TTree*) fAB->Get("ABCol0");
     }
     shapana->computeShape(alphafile, ABInit);
-    cout <<    "\t+=+    .................................... done  +=+" << endl;
-    cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
+    std::cout <<    "\t+=+    .................................... done  +=+" << std::endl;
+    std::cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
   }
   
 
@@ -757,10 +757,10 @@ void EcalLaserAnalyzer::endJob() {
   if( laserEvents == 0 ){
     
     ADCFile->Close(); 
-    stringstream del;
+    std::stringstream del;
     del << "rm " <<ADCfile;
     system(del.str().c_str());
-    cout << " No Laser Events "<< endl;
+    std::cout << " No Laser Events "<< std::endl;
     return;
   }
 
@@ -797,13 +797,13 @@ void EcalLaserAnalyzer::endJob() {
   // Analyze adc samples to get amplitudes
   //=======================================
   
-  cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
-  cout <<    "\t+=+     Analyzing laser data: getting APD, PN, APD/PN, PN/PN    +=+" << endl;
+  std::cout <<  "\n\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
+  std::cout <<    "\t+=+     Analyzing laser data: getting APD, PN, APD/PN, PN/PN    +=+" << std::endl;
   
   if( !isGainOK )
-  cout <<    "\t+=+ ............................ WARNING! APD GAIN WAS NOT 1    +=+" << endl;
+  std::cout <<    "\t+=+ ............................ WARNING! APD GAIN WAS NOT 1    +=+" << std::endl;
   if( !isTimingOK )
-  cout <<    "\t+=+ ............................ WARNING! TIMING WAS BAD        +=+" << endl;
+  std::cout <<    "\t+=+ ............................ WARNING! TIMING WAS BAD        +=+" << std::endl;
     
   
   APDFile = new TFile(APDfile.c_str(),"RECREATE");
@@ -812,7 +812,7 @@ void EcalLaserAnalyzer::endJob() {
 
   for (unsigned int i=0;i<nCrys;i++){
     
-    stringstream name;
+    std::stringstream name;
     name << "APDTree" <<i+1;
     
     APDtrees[i]= new TTree(name.str().c_str(),name.str().c_str());
@@ -859,7 +859,7 @@ void EcalLaserAnalyzer::endJob() {
       
       int jmod=modules[imod];
       
-      stringstream nameref;
+      std::stringstream nameref;
       nameref << "refAPDTree" <<imod<<"_"<<iref;
       
       RefAPDtrees[iref][jmod]= new TTree(nameref.str().c_str(),nameref.str().c_str());
@@ -911,7 +911,7 @@ void EcalLaserAnalyzer::endJob() {
       
       APDFirstAnal[iCry][icol] = new TAPD();
       IsThereDataADC[iCry][icol]=1;      
-      stringstream cut;
+      std::stringstream cut;
       cut <<"color=="<<colors[icol];
       if(ADCtrees[iCry]->GetEntries(cut.str().c_str())<10) IsThereDataADC[iCry][icol]=0;  
       
@@ -979,8 +979,8 @@ void EcalLaserAnalyzer::endJob() {
 	flag=0;
       }
       
-      if (_debug==1) cout <<"-- debug test -- apdAmpl="<<apdAmpl<< 
-		       ", apdTime="<< apdTime<< endl;
+      if (_debug==1) std::cout <<"-- debug test -- apdAmpl="<<apdAmpl<< 
+		       ", apdTime="<< apdTime<< std::endl;
       double pnmean;
       if (pn0<10 && pn1>10) {
 	pnmean=pn1;
@@ -988,7 +988,7 @@ void EcalLaserAnalyzer::endJob() {
 	pnmean=pn0;
       }else pnmean=0.5*(pn0+pn1);
       
-      if (_debug==1) cout <<"-- debug test -- pn0="<<pn0<<", pn1="<<pn1<< endl;
+      if (_debug==1) std::cout <<"-- debug test -- pn0="<<pn0<<", pn1="<<pn1<< std::endl;
       
       // Fill PN stuff
       //===============
@@ -1035,7 +1035,7 @@ void EcalLaserAnalyzer::endJob() {
   
   // Remove temporary file
   //=======================
-  stringstream del;
+  std::stringstream del;
   del << "rm " <<ADCfile;
   system(del.str().c_str());
   
@@ -1047,9 +1047,9 @@ void EcalLaserAnalyzer::endJob() {
   
   for (unsigned int iColor=0;iColor<nCol;iColor++){
     
-    stringstream nametree;
+    std::stringstream nametree;
     nametree <<"APDCol"<<colors[iColor];
-    stringstream nametree2;
+    std::stringstream nametree2;
     nametree2 <<"PNCol"<<colors[iColor];
     
     restrees[iColor]= new TTree(nametree.str().c_str(),nametree.str().c_str());
@@ -1207,7 +1207,7 @@ void EcalLaserAnalyzer::endJob() {
       // Get ref amplitudes
       //===================
 
-      if (_debug==1) cout <<"-- debug test -- Last Loop event:"<<event<<" apdAmpl:"<< apdAmpl<< endl;
+      if (_debug==1) std::cout <<"-- debug test -- Last Loop event:"<<event<<" apdAmpl:"<< apdAmpl<< std::endl;
       apdAmplA = 0.0;
       apdAmplB = 0.0;
       
@@ -1215,7 +1215,7 @@ void EcalLaserAnalyzer::endJob() {
 	RefAPDtrees[iRef][iMod+1]->GetEntryWithIndex(event); 
       }
       
-      if (_debug==1 ) cout <<"-- debug test -- Last Loop apdAmplA:"<<apdAmplA<< " apdAmplB:"<< apdAmplB<<", event:"<< event<<", eventref:"<< eventref<< endl;
+      if (_debug==1 ) std::cout <<"-- debug test -- Last Loop apdAmplA:"<<apdAmplA<< " apdAmplB:"<< apdAmplB<<", event:"<< event<<", eventref:"<< eventref<< std::endl;
       
       
       // Fill APD stuff
@@ -1317,7 +1317,7 @@ void EcalLaserAnalyzer::endJob() {
   if(!_saveallevents){
 
     APDFile->Close();
-    stringstream del2;
+    std::stringstream del2;
     del2 << "rm " <<APDfile;
     system(del2.str().c_str());
 
@@ -1340,8 +1340,8 @@ void EcalLaserAnalyzer::endJob() {
   
   resFile->Close(); 
   
-  cout <<    "\t+=+    .................................................. done  +=+" << endl;
-  cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
+  std::cout <<    "\t+=+    .................................................. done  +=+" << std::endl;
+  std::cout <<    "\t+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << std::endl;
 }
 
 
@@ -1356,7 +1356,7 @@ void EcalLaserAnalyzer::setGeomEB(int etaG, int phiG, int module, int tower, int
   channelID=5*(strip-1) + xtal-1; 
   towerID=tower;
   
-  vector<int> apdRefChan=ME::apdRefChannels(module, lmr);      
+  std::vector<int> apdRefChan=ME::apdRefChannels(module, lmr);      
   for (unsigned int iref=0;iref<nRefChan;iref++){
     if(channelID==apdRefChan[iref] && towerID==apdRefTT 
        && apdRefMap[iref].count(module)==0){
@@ -1392,7 +1392,7 @@ void EcalLaserAnalyzer::setGeomEE(int etaG, int phiG,int iX, int iY, int iZ, int
   channelID=ch;
   towerID=tower;
   
-  vector<int> apdRefChan=ME::apdRefChannels(module, lmr);      
+  std::vector<int> apdRefChan=ME::apdRefChannels(module, lmr);      
   for (unsigned int iref=0;iref<nRefChan;iref++){
     if(channelID==apdRefChan[iref] && towerID==apdRefTT 
        && apdRefMap[iref].count(module)==0){
