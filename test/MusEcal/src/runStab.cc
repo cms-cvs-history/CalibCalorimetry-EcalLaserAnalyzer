@@ -165,15 +165,22 @@ void setTDRStyle(int isIt1D) {
 int main(int argc, char **argv)
 {
 
+  int c;
+  int first=132306;
+  int last=133000;
+  int lmregion=1; 
 
   
-  int c;
-  int first=132226;
-  int last=140000;
-  int lmregion=1;
-  string savedir="STAB";
+  string fname_(getenv("MUSECAL"));
+  cout<< fname_<< endl;
+  stringstream dirss;
+  dirss<<fname_<<"/STAB";
 
-  while ( (c = getopt( argc, argv, "f:l:r:d:" ) ) != EOF ) 
+  string savedir=dirss.str();
+
+  int color = 0; 
+
+  while ( (c = getopt( argc, argv, "f:l:r:d:c:" ) ) != EOF ) 
     {
       switch (c) 
 	{
@@ -193,6 +200,10 @@ int main(int argc, char **argv)
 	  savedir       =   optarg  ;    
 	  cout <<" savedir "<< savedir << endl;
 	  break;
+	case 'c': 
+	  color       =   atoi ( optarg ) ;   
+	  cout <<" color "<< color << endl;
+	  break;
 	}
     }
 
@@ -202,22 +213,59 @@ int main(int argc, char **argv)
 
   int lmmin=lmregion; //  1
   int lmmax=lmregion+1; // 72
-  
+
+  // Barrel:
+  //========
+  int reg=ME::ecalRegion( lmmin );
+  bool isBarrel=true;
   double xmin=-95.5;
   double xmax=94.5;
   double ymin=-9.5;
   double ymax=370.5;
   int nBinsX=190;
   int nBinsY=380;
+  int iz=1;
 
-  stringstream dir;
-  dir<< savedir;
+  if(reg==ME::iEEM || reg==ME::iEEP){
+    isBarrel=false;
+  }
+  
+  if(!isBarrel){
+    xmin=-4.5;
+    xmax=105.5;
+    ymin=-105.5;
+    ymax=105.5;
+    nBinsX=110;
+    nBinsY=211;
+    if( lmregion>82 ) iz=-1;
+    
+    TFile *_file = TFile::Open("/nfshome0/ecallaser/MusEcalJulie/geom/eegeom.root" );
+    assert( _file!=0 );
+    TH2F *_ee_h     = (TH2F*) _file->Get("ee_lmr");
+    
+    TAxis *xaxe=_ee_h->GetXaxis();
+    TAxis *yaxe=_ee_h->GetYaxis();
+    
+    xmin=xaxe->GetXmin();
+    xmax=xaxe->GetXmax();
+    ymin=yaxe->GetXmin();
+    ymax=yaxe->GetXmax();
+    nBinsX=_ee_h->GetNbinsX();
+    nBinsY=_ee_h->GetNbinsY();
+    
+  }
   
   stringstream name;
-  name<<dir.str()<<"/StabilityEB"<<lmregion<<".root";
-  
+  if(color==0){
+    if(isBarrel) name<<savedir<<"/StabilityEB"<<lmregion<<"_"<< first<<"_"<<last<<".root";
+    else name<<savedir<<"/StabilityEE"<<lmregion<<"_"<< first<<"_"<<last<<".root";
+  }else{
+
+    if(isBarrel) name<<savedir<<"/StabilityEBRed"<<lmregion<<"_"<< first<<"_"<<last<<".root";
+    else name<<savedir<<"/StabilityEERed"<<lmregion<<"_"<< first<<"_"<<last<<".root"; 
+  }
+
   int type  = ME::iLaser; 
-  int color = 0; 
   int debug = 0;
   
   // Declare output file and histograms
@@ -288,7 +336,7 @@ int main(int argc, char **argv)
   if (debug==1) cout << " Creating MusEcal Instance ..."<< endl;
 
   cout<< " Creating MusEcal "<< endl ;
-  MusEcal *me = new MusEcal(ME::iLaser, ME::iBlue);
+  MusEcal *me = new MusEcal(ME::iLaser, color);
   cout<< " ... done"<< endl ;
 
 
@@ -333,10 +381,9 @@ int main(int argc, char **argv)
   //==============
 
   vector< MEChannel* > vec;
-  METimeInterval* interval;
   std::vector<int> iapdopn;
   
-  for (int lmr=lmmin; lmr<=lmmax;lmr++){  
+  for (int lmr=lmmin; lmr<lmmax;lmr++){  
     
     MERunManager* testMgr = new MERunManager( lmr, type, color );
     
@@ -425,7 +472,6 @@ int main(int argc, char **argv)
 	pnaVector_ =  me->curMgr()->pnVector(pnleaf_,0);
 	pnbVector_ =  me->curMgr()->pnVector(pnleaf_,1);
 	
-	//	interval=me->pnIntervals(  iapdopn , leaf_ );
 
 	apdVector_->getTime( timeGlobal );
 	
@@ -458,6 +504,15 @@ int main(int argc, char **argv)
 	// Loop on runs and apply selection:
 	//==================================
       
+	double shapeCorMin=0.7;
+	double shapeCorPNMin=0.9;
+	
+	if(!isBarrel){
+	  shapeCorPNMin=0.7;
+	  shapeCorMin=0.6;
+	  
+	}
+	
 	
 	for (unsigned int irun=0;irun<nrun;irun++){
 	  
@@ -472,30 +527,35 @@ int main(int argc, char **argv)
 	  }
 
 
-	  double shapeCorMin=0.7;
-	  double shapeCorPNMin=0.9;
-	  
 	  if(shapeCorVal[irun]>shapeCorMin && shapeCorFlag[irun]){
 	    
 	    corr[0] = 1.0/shapeCorVal[irun];
 	    corr[1] = 1.0/shapeCorVal[irun];
 	    corr[2] = 1.0/shapeCorVal[irun];
-	 
-	    if( shapeCorPNAVal[irun]> shapeCorPNMin && shapeCorPNBVal[irun]>shapeCorPNMin && shapeCorPNAFlag[irun] && shapeCorPNBFlag[irun]){
-	      corr[2]*=0.5*(shapeCorPNAVal[irun]+shapeCorPNBVal[irun]);
-	      myflag[2]=true;
-	    }else  myflag[2]=false;
-	    
-	    if( shapeCorPNAVal[irun]>shapeCorPNMin && shapeCorPNAFlag[irun]){
-	      corr[0]*=shapeCorPNAVal[irun];  
-	      myflag[0]=true;
-	    }else  myflag[0]=false;
-	    
-	    if( shapeCorPNBVal[irun]>shapeCorPNMin && shapeCorPNBFlag[irun]){
-	      corr[1]*=shapeCorPNBVal[irun];  
-	      myflag[1]=true;
-	    }else  myflag[1]=false;
+	    myflag[0]=true;
+	    myflag[1]=true;
+	    myflag[2]=true;
 
+	    // fixme: fix for endcap + problem with shapecorrectionpn...
+
+	    if(lmr<73 && lmr >82){
+	      
+	      if( shapeCorPNAVal[irun]> shapeCorPNMin && shapeCorPNBVal[irun]>shapeCorPNMin && shapeCorPNAFlag[irun] && shapeCorPNBFlag[irun]){
+		corr[2]*=0.5*(shapeCorPNAVal[irun]+shapeCorPNBVal[irun]);
+		myflag[2]=true;
+	      }else  myflag[2]=false;
+	      
+	      if( shapeCorPNAVal[irun]>shapeCorPNMin && shapeCorPNAFlag[irun]){
+		corr[0]*=shapeCorPNAVal[irun];  
+		myflag[0]=true;
+	      }else  myflag[0]=false;
+	      
+	      if( shapeCorPNBVal[irun]>shapeCorPNMin && shapeCorPNBFlag[irun]){
+		corr[1]*=shapeCorPNBVal[irun];  
+		myflag[1]=true;
+	      }else  myflag[1]=false;
+	    }
+	    
 	  }else{
 	    myflag[0]=false;
 	    myflag[1]=false;
@@ -544,20 +604,21 @@ int main(int argc, char **argv)
 	    }
 	    
 	    //cout<<" Test1 var="<<j1<<" type="<<j2<<" sum="<< sum[ii][j1][j2]<<" sum2="<< sum2[ii][j1][j2]<<" nn="<<nn[ii][j1][j2]<<" mean="<<mean[ii][j1][j2]<<endl;
+
 	    if(mean[ii][j1][j2]>0.0 && nn[ii][j1][j2]>10){
 	      
 	      // Fill stability histograms
 	      //==========================
-	      eb2D[j1][j2]->Fill(iX,iY,100.0*rms[ii][j1][j2]/mean[ii][j1][j2]);
+	      eb2D[j1][j2]->Fill(iX,iz*iY,100.0*rms[ii][j1][j2]/mean[ii][j1][j2]);
 	      eb1D[j1][j2]->Fill(100.0*rms[ii][j1][j2]/mean[ii][j1][j2]);
 	      
 	      //cout<<" Test2 var="<<j1<<" type="<<j2<<" iX="<<iX<<" iY="<<iY<<" stab="<<100.0*rms[ii][j1][j2]/mean[ii][j1][j2]<< endl;
-	      if (j1==0) nevt[j2]->Fill(iX,iY,nn[ii][j1][j2]);
+	      if (j1==0) nevt[j2]->Fill(iX,iz*iY,nn[ii][j1][j2]);
 	      
 	    }
 	  }
 	}
-	 	
+      	
 	
 	for(int j2=0;j2<2;j2++){
 	  double take;
@@ -592,9 +653,9 @@ int main(int argc, char **argv)
 	  }
 	  
 	  if( take!=0.0 && (nn[ii][0][j2]>10 || nn[ii][1][j2]>10) ){
-	    eb2Dbest[j2]->Fill(iX,iY,take);
+	    eb2Dbest[j2]->Fill(iX,iz*iY,take);
 	    eb1Dbest[j2]->Fill(take);
-	    pn2Dbest[j2]->Fill(iX,iY,double(ichoice));
+	    pn2Dbest[j2]->Fill(iX,iz*iY,double(ichoice));
 	    
 	  }
 	}
@@ -605,16 +666,6 @@ int main(int argc, char **argv)
     
     delete testMgr;
   }
-  stringstream names[10];
-  
-  
-  setTDRStyle(0);
-  TCanvas *can = new TCanvas("can","can", 450, 700 );
-  eb2D[0][0]->Draw("COLZ");
-  MEEBDisplay::drawEBGlobal();
-  names[0]<<dir.str()<<"/EB2D0.gif";
-  can->Print(names[0].str().c_str(),"gif");
-  
 
   fileSave->Write();
   fileSave->Close();
