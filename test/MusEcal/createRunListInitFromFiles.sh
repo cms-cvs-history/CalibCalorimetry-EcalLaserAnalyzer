@@ -65,11 +65,12 @@ do
     init $i $j $firstrun $lastrun
   done
 done
-for j in 1 2 3 4 5 6 7 8 9
-do
-  init 0 $j $firstrun $lastrun
-done
-for j in 1 2 3 4 5 6 7 8 9
-do
-  init 3 $j $firstrun $lastrun
-done
+
+#for j in 1 2 3 4 5 6 7 8 9
+#do
+#  init 0 $j $firstrun $lastrun
+#done
+#for j in 1 2 3 4 5 6 7 8 9
+#do
+#  init 3 $j $firstrun $lastrun
+#done

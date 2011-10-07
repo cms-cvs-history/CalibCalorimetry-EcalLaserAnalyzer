@@ -128,7 +128,7 @@ if( $doChangeDir == 1 ){
     
     print "Installing new directory ...\n";
  
-    my $instal="${MON_CMSSW_REL_DIR}/src/CalibCalorimetry/EcalLaserAnalyzer/scripts/install.sh";
+    my $instal="source ${MON_CMSSW_REL_DIR}/src/CalibCalorimetry/EcalLaserAnalyzer/scripts/install.sh";
     system ${instal};    
     #print "$instal \n";
     print " ... Done\n";

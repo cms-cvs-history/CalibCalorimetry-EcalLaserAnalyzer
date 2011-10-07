@@ -39,6 +39,7 @@ foreach my $dirname (@dirs)
     my $ts2=$ts+85899255076;
 
     next if( $run>$lastRun || $run<$firstRun );
+    next if( $side == 1);
     #print " $dirname $type\n";
     
     my $theLine="Run${run}_LB${lb}       $run  $lb    $nevt    $ts    $ts2    1      0      -1      -1      -1";
